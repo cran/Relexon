@@ -4,7 +4,8 @@
 \alias{elexonURL}
 \title{elexonURL}
 \usage{
-elexonURL(dataset, key, from, to)
+elexonURL(dataset = "ROLSYSDEM", key, from = Sys.Date() - 2,
+  to = Sys.Date() - 1, test = FALSE)
 }
 \arguments{
 \item{dataset}{The dataset you are pulling from BMRS/Elexon.}
@@ -14,15 +15,23 @@ elexonURL(dataset, key, from, to)
 \item{from}{This is the start date/datetime of the dataset}
 
 \item{to}{This is the end date/datetime of the dataset}
+
+\item{test}{This is set to FALSE by default. Set this argument to TRUE if you want to use the test version of the API.}
 }
 \description{
-This function a URL that can be used to download csv files manually
+This function gives either a single URL or many URLs that can be used to download csv files manually.
    Please note: it does not matter if BMRS requires the dates to be in a different format to "yyyy-mm-dd".
    The Relexon package will take care of this. Just enter the dates in the usual format!
 }
 \examples{
 \dontrun{
-elexonURL(dataset = "HHFUEL", key = "948ghmgpe",  from  = "2018-01-01", to = "2018-01-05")
+elexonURL(
+"HHFUEL",
+key = "948ghmgpe",
+from  = "2018-01-01",
+to = "2018-01-05",
+test = TRUE
+)
 }
 
 
