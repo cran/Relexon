@@ -36,45 +36,45 @@ elexonURL <- function(dataset = "ROLSYSDEM",
                       test = FALSE) {
 
   dataset <- as.character(dataset)
-
-  if (is.na(match(x = dataset, table = listAPI$FullName))){
-    rn <- match(x = dataset, table = listAPI$Component)
+  params <- elexonList()
+  if (is.na(match(x = dataset, table = params$FullName))){
+    rn <- match(x = dataset, table = params$Component)
     } else {
-      rn <- match(x = dataset, table = listAPI$FullName)
+      rn <- match(x = dataset, table = params$FullName)
     }
 
   key <- as.character(key)
 
-  from <- as.POSIXct(x = from, tz = "GMT")
+  from <- as.POSIXct(x = from, tz = "")
 
-  to <- as.POSIXct(x = to, tz = "GMT")
+  to <- as.POSIXct(x = to, tz = "")
 
   users_dates <- seq.POSIXt(
     from = as.POSIXct(x = from),
-    to = from + 86400,
+    to = to,
     by = "1 day"
   )
 
   if(grepl(pattern = " ", x = dataset)){
-    dataset <- as.character(listAPI[match(dataset, listAPI$FullName), 1])
+    dataset <- as.character(params[match(dataset, params$FullName), 1])
   }
 
-  if(grepl("DateRange", listAPI$DateStyle[rn]) |
-     (!grepl("Time", listAPI$FromStyle[rn]) &
-      grepl("Date", listAPI$FromStyle[rn]))) {
+  if(grepl("DateRange", params$DateStyle[rn]) |
+     (!grepl("Time", params$FromStyle[rn]) &
+      grepl("Date", params$FromStyle[rn]))) {
     users_dates <- format.Date(users_dates, "%Y-%m-%d")
-    } else if (grepl("Year", listAPI$DateStyle[rn])){
+    } else if (grepl("Year", params$DateStyle[rn])){
       users_dates <- format.Date(users_dates,  "%Y")
       to <-   ""
       } else {
         from <- format.Date(from, "%Y-%m-%d %H:%M:%S")
         to <- format.Date(to, "%Y-%m-%d %H:%M:%S")
         }
-  if (grepl("Unique", listAPI$DateStyle[rn])){
+  if (grepl("Unique", params$DateStyle[rn])){
     to <- ""
     from <- ""
   }
-  if (grepl("Single", listAPI$DateStyle[rn])) {
+  if (grepl("Single", params$DateStyle[rn])) {
     to <- ""
   }
 
@@ -92,24 +92,24 @@ elexonURL <- function(dataset = "ROLSYSDEM",
           dataset,
           "/v1?APIKey=",
           key,
-          if (!grepl("Unique", listAPI$DateStyle[rn])) {
+          if (!grepl("Unique", params$DateStyle[rn])) {
             paste0(
-              listAPI$FromStyle[rn],
+              params$FromStyle[rn],
               users_dates[i]
               )
           },
           if (
-            !grepl("Unique", listAPI$DateStyle[rn]) &
-              !is.na(listAPI$ToStyle[rn])
+            !grepl("Unique", params$DateStyle[rn]) &
+              !is.na(params$ToStyle[rn])
               ) {
             paste0(
-              listAPI$ToStyle[rn],
+              params$ToStyle[rn],
               users_dates[i + 1]
             )
           },
-          if(!is.na(listAPI$Periodic[rn])) {
-            listAPI$Periodic[rn]
-            }, if(!is.na(listAPI$Periodic[rn])){
+          if(!is.na(params$Periodic[rn])) {
+            params$Periodic[rn]
+            }, if(!is.na(params$Periodic[rn])){
             (seq_len(50))
             },
             "&ServiceType=csv"

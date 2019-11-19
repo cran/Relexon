@@ -16,8 +16,7 @@
 #'
 #' @export
 elexonList <- function(){
-  LA <- listAPI[,c(1:2,10)]
-  return(LA)
+   listAPI
   }
 
 

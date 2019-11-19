@@ -1,10 +1,10 @@
-ee7489e060a6341fa43816148f08b361 *DESCRIPTION
+478733ac8279823835c2398ec4b20ca7 *DESCRIPTION
 d1f35113d86f3d5c7999d5e22ab76ab4 *NAMESPACE
-3d910048dcf972b4c3292bd442de49bd *R/elexonData.R
+315dbdc317746dd86c43f606c3a9e4e7 *R/elexonData.R
 d786f4c8a3284dc7989519533dbf284e *R/elexonDynamic.R
-b8424dda7f901358a0a39c5317c50f9b *R/elexonList.R
+1c8fa4b80886fcfaaba04d7d87b94d2d *R/elexonList.R
 15c70609140659678bfc91c3164e1d24 *R/elexonPhysical.R
-61800cbfc6d30ca8b98c483415ab3b03 *R/elexonURL.R
+85ec2ae53fbe3336b50cd5fd9d77f646 *R/elexonURL.R
 985a33df78b20aff906c0b3fba1eb46c *R/sysdata.rda
 b143361d35f2eac7c4c2d06659f01d82 *man/elexonData.Rd
 7ebfa96cd30745f18a0e39f658557258 *man/elexonDynamic.Rd

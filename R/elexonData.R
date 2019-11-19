@@ -36,26 +36,28 @@ elexonData <- function(dataset = "ROLSYSDEM",
 
 dataset <- as.character(dataset)
 
-if (is.na(match(x = dataset, table = listAPI$FullName))) {
-  rn <- match(x = dataset, table = listAPI$Component)
+params <- elexonList()
+
+if (is.na(match(x = dataset, table = params$FullName))) {
+  rn <- match(x = dataset, table = params$Component)
 } else {
-  rn <- match(x = dataset, table = listAPI$FullName)
+  rn <- match(x = dataset, table = params$FullName)
 }
 
-if(listAPI$wnmsg[rn] != "Available") {
+if(params$wnmsg[rn] != "Available") {
   stop("Unavailable in this package version")
 }
 
 
-if (listAPI$cn[rn] != "0" & listAPI$cn[rn] != 0){
+if (params$cn[rn] != "0" & params$cn[rn] != 0){
   df_cn <- as.character(
     as.vector(
-      unlist(strsplit(listAPI$cn[rn], ",")),
+      unlist(strsplit(params$cn[rn], ",")),
       mode = "list"
     )
   )
 } else {
-  df_cn <- as.logical(listAPI$ColNames[rn])
+  df_cn <- as.logical(params$ColNames[rn])
   }
 
 links <- unlist(
@@ -71,12 +73,12 @@ df <-   tryCatch(
             links,
             readr::read_csv,
             col_names =  df_cn,
-            skip = listAPI$SKP[rn])
+            skip = params$SKP[rn])
           )
         )
       )
     )
-df <- df[df$V1 != "FTR",]
+df <- df[-grep("FTR", df[,1]),]
 closeAllConnections()
 unique(df)
 }
